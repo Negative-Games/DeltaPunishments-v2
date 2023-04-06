@@ -1,0 +1,6 @@
+HISTORY: "punishments.commands.history"
+PUNISH: "punishments.commands.punish"
+REMOVE_FROM_DATABASE: "punishments.database" # Very dangerous permission, only give it to people you trust
+EXECUTE_PUNISHMENT: "punishments.type."
+RELOAD: "punishments.reload"
+NOTES: "punishments.notes"

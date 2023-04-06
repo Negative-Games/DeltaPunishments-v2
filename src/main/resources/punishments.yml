@@ -1,0 +1,34 @@
+HACKING: # Identifier
+  reason: "Hacked Client" # Reason of Punishment
+  forgiveness-offset: "100d" # After this declared time, the player can be "forgiven"
+  # and the punishment will not be involved with the calculation
+  stackables: # Stackables (meaning the more you get banned the higher the length!)
+    - "ban:7d;broadcast hahaha %player% got banned what a noob"
+    - "ban:14d"
+    - "ban:30d"
+    - "ban:perm"
+BUG_ABUSE:
+  reason: "Bug Abuse"
+  forgiveness-offset: "100d"
+  stackables:
+    - "ban:14d"
+    - "ban:30d"
+    - "ban:perm"
+DOXXING:
+  reason: "Doxxing [Blacklisted]"
+  forgiveness-offset: "none" # Forgiveness is not available for this punishment
+  stackables:
+    - "ipban:perm"
+
+SPAMMING:
+  reason: "Spam"
+  forgiveness-offset: "60d"
+  stackables:
+    - 'mute:1h'
+    - 'mute:2h'
+    - 'mute:12h'
+    - 'mute:1d'
+    - 'mute:7d'
+    - 'mute:14d'
+    - 'mute:30d'
+    - 'mute:perm'

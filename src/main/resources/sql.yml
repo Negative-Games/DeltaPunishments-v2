@@ -1,0 +1,13 @@
+# This setting determines if our alternative method of
+# communicating with the database is used.
+enabled: false
+host: "my.host.com"
+port: 3306
+user: "myuser"
+password: "mypassword"
+database: "litebans"
+
+bans-table: "litebans_bans"
+mutes-table: "litebans_mutes"
+warns-table: "litebans_warnings"
+kicks-table: "litebans_kicks"

@@ -1,0 +1,141 @@
+punish: # GUI for /punish
+  title: "&6&lPunishing &e&l%offender%"
+  rows: 6
+  filler-item:
+    material: STAINED_GLASS_PANE
+    data: 15 # Not required in 1.13+
+  fillers:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "46"
+    - "47"
+    - "48"
+    - "49"
+    - "50"
+    - "51"
+    - "52"
+    - "53"
+    - "54"
+  slots:
+    hacking: # Identifier and the Identifier in punishments.yml
+      name: "&c&lHacking"
+      material: DIAMOND_SWORD # Material name
+      data: 0 # Material data (does not apply in 1.13+)
+      lore:
+        - " "
+        - "&fViolation #1: &e7 day &c(BAN)"
+        - "&fViolation #2: &e14 day &c(BAN)"
+        - "&fViolation #3: &e30 day &c(BAN)"
+        - "&fViolation #4: &epermanent &c(BAN)"
+        - " "
+        - "&fTotal Punishments of this category: &e%total%"
+      position: 10
+history: # GUI for /history (main menu)
+  title: "&6&lChoose a Punishment Type"
+  rows: 3
+  filler-item:
+    material: STAINED_GLASS_PANE
+    data: 15 # Not required in 1.13+
+  fillers:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+    - "11"
+    - "12"
+    - "13"
+    - "14"
+    - "15"
+    - "16"
+    - "17"
+    - "18"
+    - "19"
+    - "20"
+    - "21"
+    - "22"
+    - "23"
+    - "24"
+    - "25"
+    - "26"
+    - "27"
+  slots:
+    mutes:
+      name: "&3&lMutes"
+      material: INK_SACK
+      data: 11
+      position: 11
+    warns:
+      name: "&e&lWarnings"
+      material: INK_SACK
+      data: 6
+      position: 13
+    bans:
+      name: "&4&lBans"
+      material: INK_SACK
+      data: 1
+      position: 15
+    kicks:
+      name: "&d&lKicks"
+      material: INK_SACK
+      data: 4
+      position: 17
+
+confirm-punishment:
+  title: "&6&lConfirm Punishment"
+  rows: 3
+  enabled: true
+  filler-item:
+    material: STAINED_GLASS_PANE
+    data: 15 # Not required in 1.13+
+  fillers:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+    - "11"
+    - "12"
+    - "13"
+    - "14"
+    - "15"
+    - "16"
+    - "17"
+    - "18"
+    - "19"
+    - "20"
+    - "21"
+    - "22"
+    - "23"
+    - "24"
+    - "25"
+    - "26"
+    - "27"
+  slots:
+    silent:
+      name: "&7&lSilent Punishment"
+      material: WOOL
+      data: 8
+      position: 12
+    public:
+      name: "&c&lPublic Punishment"
+      material: WOOL
+      data: 14
+      position: 16

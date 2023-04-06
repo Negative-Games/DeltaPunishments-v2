@@ -1,0 +1,8 @@
+name: DeltaPunishments
+version: ${project.version}
+main: games.negative.punishments.DeltaPunishments
+authors: [ Negative ]
+description: GUI and Stack based plugin!
+api-version: 1.13
+depend: [ LiteBans ]
+softdepend: [ floodgate ]
