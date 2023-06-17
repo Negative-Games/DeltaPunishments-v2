@@ -1,5 +1,6 @@
 package games.negative.punishments;
 
+import games.negative.framework.commands.CommandBuilder;
 import games.negative.punishments.api.PunishSQLManager;
 import games.negative.punishments.api.PunishmentCacheManager;
 import games.negative.punishments.commands.CommandHistory;
@@ -65,16 +66,32 @@ public final class DeltaPunishments extends BasePlugin {
 
         new PunishmentAPIProvider(this, false);
 
-
-        registerCommands(
-                new CommandHistory(),
-                new CommandPunish(),
-                new CommandPunishReload()
-        );
+        regCommands();
 
         long finish = System.currentTimeMillis();
         long time = finish - start;
         System.out.println("[DeltaPunishments] Successfully started in " + time + "ms");
+    }
+
+    private void regCommands() {
+        // Register /history command
+        registerCommand(
+                new CommandBuilder(new CommandHistory(this))
+                        .name("history").aliases("hist").params("player").playerOnly()
+                        .permission(Permissions.HISTORY)
+        );
+
+        // Register /punish command
+        registerCommand(
+            new CommandBuilder(new CommandPunish(this))
+                    .name("punish").aliases("pu").params("player").permission(Permissions.PUNISH)
+        );
+
+        // Register /punishreload command
+        registerCommand(
+                new CommandBuilder(new CommandPunishReload())
+                        .name("punishreload").aliases("pureload").permission(Permissions.RELOAD)
+        );
     }
 
     @Override

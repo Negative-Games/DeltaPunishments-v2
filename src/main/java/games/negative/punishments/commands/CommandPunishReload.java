@@ -1,18 +1,17 @@
 package games.negative.punishments.commands;
 
+import games.negative.framework.commands.Command;
+import games.negative.framework.commands.Context;
+import games.negative.framework.util.FileLoader;
 import games.negative.punishments.DeltaPunishments;
 import games.negative.punishments.api.PunishAPI;
 import games.negative.punishments.api.PunishManager;
 import games.negative.punishments.api.managers.GUIManager;
 import games.negative.punishments.core.Locale;
 import games.negative.punishments.core.util.Permissions;
-import games.negative.framework.command.Command;
-import games.negative.framework.command.annotation.CommandInfo;
-import games.negative.framework.util.FileLoader;
-import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-@CommandInfo(name = "punishreload", aliases = {"preload"})
-public class CommandPunishReload extends Command {
+public class CommandPunishReload implements Command {
 
     private final GUIManager guiManager;
     private final PunishManager punishManager;
@@ -20,12 +19,10 @@ public class CommandPunishReload extends Command {
     public CommandPunishReload() {
         punishManager = PunishAPI.getInstance().getPunishManager();
         guiManager = GUIManager.getInstance();
-
-        setPermission(Permissions.RELOAD);
     }
 
     @Override
-    public void onCommand(CommandSender sender, String[] args) {
+    public void execute(@NotNull Context context) {
         DeltaPunishments plugin = DeltaPunishments.getInstance();
         FileLoader.loadFile(plugin, "messages.yml");
         FileLoader.loadFile(plugin, "permissions.yml");
@@ -37,6 +34,6 @@ public class CommandPunishReload extends Command {
         punishManager.reload();
         guiManager.reload();
 
-        Locale.RELOAD.send(sender);
+        Locale.RELOAD.send(context.getCommandSender());
     }
 }

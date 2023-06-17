@@ -1,5 +1,7 @@
 package games.negative.punishments.commands;
 
+import games.negative.framework.commands.Command;
+import games.negative.framework.commands.Context;
 import games.negative.punishments.DeltaPunishments;
 import games.negative.punishments.api.PunishAPI;
 import games.negative.punishments.api.PunishManager;
@@ -9,63 +11,38 @@ import games.negative.punishments.api.structure.PersistentPunishment;
 import games.negative.punishments.api.structure.Punishment;
 import games.negative.punishments.api.structure.config.ConfigurableGUI;
 import games.negative.punishments.core.Locale;
-import games.negative.punishments.core.util.Permissions;
 import games.negative.punishments.menus.PunishMenu;
-import games.negative.framework.command.Command;
-import games.negative.framework.command.annotation.CommandInfo;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
 
-@CommandInfo(name = "punish", aliases = "pu", args = "player")
-public class CommandPunish extends Command {
+public class CommandPunish implements Command {
     private final GUIManager guiManager;
     private final PunishManager punishManager;
     private final DeltaPunishments plugin;
 
-    public CommandPunish() {
-        setPermissionNode(Permissions.PUNISH);
-
-        guiManager = GUIManager.getInstance();
+    public CommandPunish(DeltaPunishments plugin) {
+        this.plugin = plugin;
         punishManager = PunishAPI.getInstance().getPunishManager();
-        plugin = DeltaPunishments.getInstance();
+        guiManager = GUIManager.getInstance();
+    }
 
-        setTabComplete((sender, args) -> {
-            if (args.length == 1) {
-                String lastWord = args[args.length - 1];
-                Player senderPlayer = sender instanceof Player ? (Player) sender : null;
-                ArrayList<String> matchedPlayers = new ArrayList<>();
-                sender.getServer().getOnlinePlayers().stream()
-                        .filter(player -> senderPlayer == null || senderPlayer.canSee(player) && StringUtil.startsWithIgnoreCase(player.getName(), lastWord))
-                        .forEach(player -> matchedPlayers.add(player.getName()));
-
-                matchedPlayers.sort(String.CASE_INSENSITIVE_ORDER);
-                return matchedPlayers;
-            }
-            if (args.length == 2) {
-                List<String> punishments = new ArrayList<>();
-                punishManager.getPunishmentMap().forEach((key, value) -> punishments.add(value.getId().toLowerCase()));
-
-                String lastWord = args[args.length - 1];
-                return punishments.stream()
-                        .filter(s -> sender.hasPermission(Permissions.EXECUTE_PUNISHMENT + s)
-                                && StringUtil.startsWithIgnoreCase(s, lastWord))
-                        .collect(Collectors.toList());
-            }
-
-            return null;
-        });
+    private boolean findWord(String input, String[] args) {
+        return Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase(input));
     }
 
     @Override
-    public void onCommand(CommandSender sender, String[] args) {
+    public void execute(@NotNull Context context) {
+        String[] args = context.getArgs();
+
         OfflinePlayer offender = Bukkit.getOfflinePlayer(args[0]);
         if (args.length == 1) {
             PunishmentCacheManager cacheManager = plugin.getCacheManager();
@@ -77,7 +54,10 @@ public class CommandPunish extends Command {
                 return;
             }
 
-            new PunishMenuRunnable(gui.get(), (Player) sender, offender, punishments).runTask(plugin);
+            Player player = context.getPlayer();
+            assert player != null;
+
+            new PunishMenuRunnable(gui.get(), player, offender, punishments).runTask(plugin);
             return;
         }
 
@@ -86,17 +66,13 @@ public class CommandPunish extends Command {
                 .findFirst();
 
         if (!first.isPresent()) {
-            Locale.INVALID_PUNISHMENT.replace("%input%", args[1]).send(sender);
+            Locale.INVALID_PUNISHMENT.replace("%input%", args[1]).send(context.getCommandSender());
             return;
         }
 
         boolean pub = findWord("-p", args);
         boolean fin = findWord("-f", args);
-        punishManager.executePunishment(sender, offender, first.get().getValue(), !pub, fin);
-    }
-
-    private boolean findWord(String input, String[] args) {
-        return Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase(input));
+        punishManager.executePunishment(context.getCommandSender(), offender, first.get().getValue(), !pub, fin);
     }
 
     @RequiredArgsConstructor

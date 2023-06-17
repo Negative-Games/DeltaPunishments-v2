@@ -1,34 +1,30 @@
 package games.negative.punishments.commands;
 
+import games.negative.framework.commands.Command;
+import games.negative.framework.commands.Context;
 import games.negative.punishments.DeltaPunishments;
 import games.negative.punishments.api.managers.GUIManager;
 import games.negative.punishments.api.structure.config.ConfigurableGUI;
 import games.negative.punishments.core.structure.PersistentOfflinePlayer;
-import games.negative.punishments.core.util.Permissions;
 import games.negative.punishments.menus.history.HistoryMenu;
-import games.negative.framework.command.Command;
-import games.negative.framework.command.annotation.CommandInfo;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.geysermc.floodgate.api.FloodgateApi;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
-@CommandInfo(name = "history", aliases = {"hist"}, args = "player", playerOnly = true)
-public class CommandHistory extends Command {
+public class CommandHistory implements Command {
     private final GUIManager guiManager;
     private FloodgateApi bedrockAPI;
     private final DeltaPunishments plugin;
 
-    public CommandHistory() {
-        this.plugin = DeltaPunishments.getInstance();
-        setPermissionNode(Permissions.HISTORY);
-
+    public CommandHistory(DeltaPunishments plugin) {
+        this.plugin = plugin;
         guiManager = GUIManager.getInstance();
 
         try {
@@ -40,9 +36,11 @@ public class CommandHistory extends Command {
     }
 
     @Override
-    public void onCommand(CommandSender sender, String[] args) {
-        Player player = (Player) sender;
+    public void execute(@NotNull Context context) {
+        Player player = context.getPlayer();
+        assert player != null;
 
+        String[] args = context.getArgs();
         if (bedrockAPI == null) {
             PersistentOfflinePlayer offender = PersistentOfflinePlayer.ofOfflinePlayer(Bukkit.getOfflinePlayer(args[0]));
             new HistoryMenuRunnable(player, offender).runTask(plugin);
