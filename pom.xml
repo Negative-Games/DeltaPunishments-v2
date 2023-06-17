@@ -48,7 +48,7 @@
                     <relocations>
                         <relocation>
                             <pattern>games.negative.framework</pattern>
-                            <shadedPattern>club.deltapvp.punishments.framework</shadedPattern>
+                            <shadedPattern>games.negative.punishments.framework</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
