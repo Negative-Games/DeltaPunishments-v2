@@ -2,7 +2,6 @@ package games.negative.punishments;
 
 import games.negative.punishments.api.PunishSQLManager;
 import games.negative.punishments.api.PunishmentCacheManager;
-import games.negative.punishments.commands.CommandGetProcessList;
 import games.negative.punishments.commands.CommandHistory;
 import games.negative.punishments.commands.CommandPunish;
 import games.negative.punishments.commands.CommandPunishReload;
@@ -70,8 +69,7 @@ public final class DeltaPunishments extends BasePlugin {
         registerCommands(
                 new CommandHistory(),
                 new CommandPunish(),
-                new CommandPunishReload(),
-                new CommandGetProcessList()
+                new CommandPunishReload()
         );
 
         long finish = System.currentTimeMillis();
