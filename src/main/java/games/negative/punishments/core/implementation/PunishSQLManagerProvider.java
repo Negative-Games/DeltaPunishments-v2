@@ -1,5 +1,6 @@
 package games.negative.punishments.core.implementation;
 
+import com.google.common.collect.Lists;
 import games.negative.punishments.api.PunishSQLManager;
 import games.negative.punishments.api.structure.PersistentPunishment;
 import games.negative.punishments.api.structure.PunishmentType;
@@ -39,7 +40,7 @@ public class PunishSQLManagerProvider implements PunishSQLManager {
 
     @Override
     public Collection<PersistentPunishment> getPunishments(@NotNull UUID uuid, @NotNull PunishmentType type) {
-        List<PersistentPunishment> punishments = new ArrayList<>();
+        List<PersistentPunishment> punishments = Lists.newArrayList();
         if (connection != null) {
             // Determine which table to use
             String query = "SELECT * FROM {table} WHERE uuid=?";
