@@ -39,15 +39,11 @@ public class PunishmentCacheManagerProvider implements PunishmentCacheManager {
         all.addAll(loadPunishments(PunishmentType.KICK));
         all.addAll(loadPunishments(PunishmentType.WARN));
 
-        int validPunishments = 0;
-        int invalidPunishments = 0;
         for (PersistentPunishment punishment : all) {
             UUID uuid;
             try {
                 uuid = UUID.fromString(punishment.getUuid());
-                validPunishments++;
             } catch (Exception e) {
-                invalidPunishments++;
                 continue;
             }
 
