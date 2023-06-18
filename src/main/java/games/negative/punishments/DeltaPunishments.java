@@ -67,10 +67,6 @@ public final class DeltaPunishments extends BasePlugin {
         new PunishmentAPIProvider(this, false);
 
         regCommands();
-
-        long finish = System.currentTimeMillis();
-        long time = finish - start;
-        System.out.println("[DeltaPunishments] Successfully started in " + time + "ms");
     }
 
     private void regCommands() {
