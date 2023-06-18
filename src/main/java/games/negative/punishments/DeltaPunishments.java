@@ -34,7 +34,6 @@ public final class DeltaPunishments extends BasePlugin {
     public void onEnable() {
         super.onEnable();
         // Plugin startup logic
-        long start = System.currentTimeMillis();
         instance = this;
 
         loadFiles(
